@@ -1,5 +1,6 @@
 package top.danny.spider.dao.jpa;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import top.danny.spider.dao.data.UserDO;
 

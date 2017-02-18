@@ -23,7 +23,7 @@
     <import resource="classpath:/spring/applicationContext-jpa.xml" />
 
     <!-- 扫描包，加载service实现类 -->
-    <context:component-scan base-package="com.danny.test.service"></context:component-scan>
+    <context:component-scan base-package="top.danny.spider.service"></context:component-scan>
 
     <!--启用注解驱动的定时任务-->
     <task:annotation-driven scheduler="myScheduler"/>
