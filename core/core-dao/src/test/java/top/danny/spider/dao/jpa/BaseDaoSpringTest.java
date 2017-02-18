@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
  * @Company: lxjr.com
  * @Created on 2017-02-18 14:42:51
  */
-@ContextConfiguration(locations = { "classpath:/spring/applicationContext-jpa.xml" })
+@ContextConfiguration(locations = {"classpath:/spring/applicationContext-jpa.xml"})
 public abstract class BaseDaoSpringTest extends AbstractTransactionalJUnit4SpringContextTests
 {
     public void fail(Exception e) {

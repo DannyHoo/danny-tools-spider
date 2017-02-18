@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
  * @Company: lxjr.com
  * @Created on 2017-02-18 16:55:49
  */
-@ContextConfiguration(locations = { "classpath:/spring/applicationContext-service.xml" })
+@ContextConfiguration(locations = {"classpath:/spring/applicationContext-service.xml"})
 public abstract class BaseServiceSpringTest extends
 		AbstractJUnit4SpringContextTests {
 

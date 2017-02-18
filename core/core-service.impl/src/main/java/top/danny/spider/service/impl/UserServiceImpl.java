@@ -28,6 +28,7 @@ public class UserServiceImpl  extends BaseServiceImpl implements UserService {
         UserDO userDo=convertIgnoreNullProperty(user,UserDO.class);
         UserDO userDoSaved = userDao.save(userDo);
         User userSaved=convertIgnoreNullProperty(userDoSaved,User.class);
+        int i=1/0;
         return userSaved;
     }
 }
