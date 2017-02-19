@@ -17,6 +17,7 @@ public class BaseBean implements Serializable {
 
     /** 主键 **/
     protected Long id;
+    protected String comment;
     /** 创建时间 **/
     @JSONField(format = "yyyy-MM-dd hh:mm:ss")
     protected Date createTime;
@@ -34,6 +35,15 @@ public class BaseBean implements Serializable {
 
     public BaseBean setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public BaseBean setComment(String comment) {
+        this.comment = comment;
         return this;
     }
 

@@ -52,7 +52,7 @@
 					<div class="light_wp scale_box"><span class=light_box><i class=light_1></i> <i class=light_2></i> <i class=light_3></i> <i class=light_4></i> <i class=light_5></i></span></div><span class="meteor_box scale_box"></span>
 					<div class="txt_box scale_box">
 						<h2>还有另一个自己在这里等你</h2>
-						<p class=txt_brief>当你使用AMD的同时，也许另一个人也和你一样，在下载、在观看同样的东西。这些只是开始，新一代AMD使用越久，越能发现它的创新和诚心。</div>
+						<p class=txt_brief>当你在探索的同时，也许另一个人也和你一样，在思考、在寻找同样的东西。这些只是开始，思考的越久，越能发现科技的精髓和奥妙。</div>
 				</div>
 			</div>
 			<div class="star_wp scale_box" id=star_wp><span class=star_bg></span> <span class=star_box></span></div><canvas id=canvas></canvas>

@@ -1,7 +1,13 @@
 package top.danny.spider.controller.component;
 
+import org.junit.Assert;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import top.danny.spider.model.bean.User;
+import top.danny.spider.service.UserService;
+
+import java.util.Date;
 
 /**
  * @author huyuyang@lxfintech.com
@@ -13,9 +19,30 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class DemoTimer {
+    @Autowired
+    private UserService userService;
 
-    @Scheduled(cron = "1/5 * * * * ?" )
+    @Scheduled(cron = "0 0 1/2 * * ?" )
     public void demoTest(){
-        System.out.println("test");
+        saveUserTest();
+    }
+
+    public void saveUserTest() {
+        User user = getUser();
+        User userSaved = userService.saveUser(user);
+        Assert.assertNotNull(userSaved);
+    }
+
+    private User getUser() {
+        User user = new User();
+        user.setUserName("danny")
+                .setPassword("123456")
+                .setRealName("定时器")
+                .setIdCardNo("187302199009098918")
+                .setMobileNo("18730984987")
+                .setAge(26)
+                .setBirthday(new Date())
+        ;
+        return user;
     }
 }

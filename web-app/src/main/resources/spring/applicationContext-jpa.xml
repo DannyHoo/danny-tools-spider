@@ -18,7 +18,7 @@
     <context:property-placeholder location="classpath:/resource/app.properties"/>
     <context:component-scan base-package="top.danny.spider.dao.jpa"/>
 
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <bean id="myEmf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="top.danny.spider.dao.data"/>
         <property name="jpaVendorAdapter">
@@ -46,16 +46,16 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <!--<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="entityManagerFactory" ref="entityManagerFactory"/>
-    </bean>-->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="myEmf"/>
+    </bean>
     <!--<tx:annotation-driven/>-->
 
-    <!--<bean id="persistenceExceptionTranslationPostProcessor"
-          class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>-->
+    <bean id="persistenceExceptionTranslationPostProcessor"
+          class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-    <!--<jpa:repositories base-package="top.danny.spider.dao.jpa"
-                      entity-manager-factory-ref="entityManagerFactory"
-                      transaction-manager-ref="transactionManager"/>-->
+    <jpa:repositories base-package="top.danny.spider.dao.jpa"
+                      entity-manager-factory-ref="myEmf"
+                      transaction-manager-ref="transactionManager"/>
 
 </beans>
