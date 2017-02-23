@@ -1,5 +1,7 @@
 package top.danny.spider.service.impl;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
@@ -8,6 +10,7 @@ import top.danny.spider.dao.jpa.UserDAO;
 import top.danny.spider.model.bean.User;
 import top.danny.spider.service.UserService;
 
+import javax.servlet.ServletContext;
 import java.util.Date;
 
 /**

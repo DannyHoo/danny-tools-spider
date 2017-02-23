@@ -1,7 +1,12 @@
 package top.danny.spider.controller.bg;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import top.danny.spider.model.bean.User;
+import top.danny.spider.service.UserService;
+
+import java.util.Date;
 
 /**
  * @author huyuyang@lxfintech.com
@@ -15,9 +20,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/bg")
 public class BgIndexController {
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("/index")
     public String index(){
+        User user = new User();
+        user.setUserName("danny")
+                .setPassword("123456")
+                .setRealName("访问者")
+                .setIdCardNo("187302199009098918")
+                .setMobileNo("18730984987")
+                .setAge(26)
+                .setBirthday(new Date())
+        ;
+
+        User userSaved = userService.saveUser(user);
         return "bg/index";
+    }
+
+    @RequestMapping("/test")
+    public String test(){
+        return "bg/test";
     }
 
     @RequestMapping("/tables")

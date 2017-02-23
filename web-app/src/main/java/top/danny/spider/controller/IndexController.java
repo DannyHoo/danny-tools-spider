@@ -77,7 +77,7 @@ public class IndexController {
         System.out.println("Cookie : " + request.getHeader("Cookie"));
 */
 
-        User user = new User();
+        /*User user = new User();
         user.setUserName("danny")
                 .setPassword("123456")
                 .setRealName("访问者")
@@ -87,7 +87,7 @@ public class IndexController {
                 .setBirthday(new Date())
                 .setComment("IP:"+request.getRemoteAddr()+";Host:"+request.getRemoteHost())
         ;
-        User userSaved = userService.saveUser(user);
+        User userSaved = userService.saveUser(user);*/
         return "index";
     }
 
