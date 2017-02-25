@@ -27,12 +27,21 @@
 	<mvc:resources location="/WEB-INF/css/" mapping="/css/**" />
 	<mvc:resources location="/WEB-INF/img/" mapping="/img/**" />
 
-	<!-- 配置视图解析器: 如何把 handler 方法返回值解析为实际的物理视图 -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!-- 配置SpringMvc视图解析器: 如何把 handler 方法返回值解析为实际的物理视图 -->
+	<!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/"></property>
 		<property name="suffix" value=".jsp"></property>
+	</bean>-->
+	<!-- Beetl的视图解析器，相当于替代了上面SpringMVC的视图解析器 -->
+	<bean id="beetlConfig" class="org.beetl.ext.spring.BeetlGroupUtilConfiguration" init-method="init">
+		<property name="root" value="/"/>
 	</bean>
-	
+	<bean id="viewResolver" class="org.beetl.ext.spring.BeetlSpringViewResolver">
+		<property name="contentType" value="text/html;charset=UTF-8"/>
+		<property name="prefix" value="/WEB-INF/"/>
+		<property name="suffix" value=".html"/>
+	</bean>
+
 	<!-- 配置视图  BeanNameViewResolver 解析器: 使用视图的名字来解析视图 -->
 	<!-- 通过 order 属性来定义视图解析器的优先级, order 值越小优先级越高 -->
 	<!-- <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">

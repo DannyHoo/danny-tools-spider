@@ -23,8 +23,14 @@ public class UserDO extends BaseEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "portrait")
+    private String portrait;
+
     @Column(name="realName")
     private String realName;
+
+    @Column(name="sex")
+    private int sex;
 
     @Column(name="idCardNo")
     private String idCardNo;
@@ -32,11 +38,17 @@ public class UserDO extends BaseEntity {
     @Column(name="mobileNo")
     private String mobileNo;
 
-    @Column(name="age")
-    private Integer age;
+    @Column(name="email")
+    private String email;
 
     @Column(name="birthday")
     private Date birthday;
+
+    @Column(name="address")
+    private String address;
+
+    @Column(name="age")
+    private Integer age;
 
     public String getUserName() {
         return userName;
@@ -56,12 +68,30 @@ public class UserDO extends BaseEntity {
         return this;
     }
 
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public UserDO setPortrait(String portrait) {
+        this.portrait = portrait;
+        return this;
+    }
+
     public String getRealName() {
         return realName;
     }
 
     public UserDO setRealName(String realName) {
         this.realName = realName;
+        return this;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public UserDO setSex(int sex) {
+        this.sex = sex;
         return this;
     }
 
@@ -83,17 +113,12 @@ public class UserDO extends BaseEntity {
         return this;
     }
 
-    public UserDO setAge(Integer age) {
-        this.age = age;
-        return this;
+    public String getEmail() {
+        return email;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public UserDO setAge(int age) {
-        this.age = age;
+    public UserDO setEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -103,6 +128,24 @@ public class UserDO extends BaseEntity {
 
     public UserDO setBirthday(Date birthday) {
         this.birthday = birthday;
+        return this;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public UserDO setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public UserDO setAge(Integer age) {
+        this.age = age;
         return this;
     }
 }

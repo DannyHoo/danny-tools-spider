@@ -15,15 +15,25 @@ public class User extends BaseBean {
 
     private String password;
 
+    private String portrait;
+
     private String realName;
+
+    private int sex;
 
     private String idCardNo;
 
     private String mobileNo;
 
-    private Integer age;
+    private String email;
 
     private Date birthday;
+
+    private String address;
+
+    private Integer districtId;
+
+    private Integer age;
 
     public String getUserName() {
         return userName;
@@ -43,12 +53,30 @@ public class User extends BaseBean {
         return this;
     }
 
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public User setPortrait(String portrait) {
+        this.portrait = portrait;
+        return this;
+    }
+
     public String getRealName() {
         return realName;
     }
 
     public User setRealName(String realName) {
         this.realName = realName;
+        return this;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public User setSex(int sex) {
+        this.sex = sex;
         return this;
     }
 
@@ -70,12 +98,12 @@ public class User extends BaseBean {
         return this;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getEmail() {
+        return email;
     }
 
-    public User setAge(Integer age) {
-        this.age = age;
+    public User setEmail(String email) {
+        this.email = email;
         return this;
     }
 
@@ -85,6 +113,33 @@ public class User extends BaseBean {
 
     public User setBirthday(Date birthday) {
         this.birthday = birthday;
+        return this;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public User setAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public Integer getDistrictId() {
+        return districtId;
+    }
+
+    public User setDistrictId(Integer districtId) {
+        this.districtId = districtId;
+        return this;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public User setAge(Integer age) {
+        this.age = age;
         return this;
     }
 }

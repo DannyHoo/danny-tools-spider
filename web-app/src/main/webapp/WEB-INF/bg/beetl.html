@@ -1,0 +1,22 @@
+<html>
+<head>
+</head>
+<body>
+<h2>后台参数回显User：</h2>
+<%
+	for(user in userList){
+	print(user.userName);
+}
+%>
+
+<h2>内置函数：</h2>
+	返回Date类型的指定日期2011-1-1：   ${date( "2011-1-1" , "yyyy-MM-dd" )}<br/>
+
+<h2>自定义函数：</h2>
+	<%if(compareDate("2011-10-10 12:12:12","2012-10-10 12:12:12")==1){%>
+		yes
+	<%}else{%>
+		no
+	<%}%>
+</body>
+</html>

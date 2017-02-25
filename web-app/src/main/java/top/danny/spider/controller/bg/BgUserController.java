@@ -18,17 +18,18 @@ import java.util.Map;
  * @Company: lxjr.com
  * @Created on 2017-02-25 00:16:59
  */
-@RequestMapping("/bg/user")
+@RequestMapping("/bg")
 @Controller
 public class BgUserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/manager")
+    @RequestMapping("/user/manager")
     public ModelAndView manager(Map map){
-        ModelAndView modelAndView=new ModelAndView("bg/user/manager");
+        ModelAndView modelAndView=new ModelAndView("bg/manager");
         List<User> userList= userService.findAllUser();
         modelAndView.addObject("userList",userList);
+        modelAndView.addObject("a","danny");
         return modelAndView;
     }
 }
