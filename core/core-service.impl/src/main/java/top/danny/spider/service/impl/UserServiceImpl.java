@@ -9,9 +9,11 @@ import top.danny.spider.dao.data.UserDO;
 import top.danny.spider.dao.jpa.UserDAO;
 import top.danny.spider.model.bean.User;
 import top.danny.spider.service.UserService;
+import top.danny.spider.utils.IterableUtils;
 
 import javax.servlet.ServletContext;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author huyuyang@lxfintech.com
@@ -22,15 +24,20 @@ import java.util.Date;
  * @Created on 2017-02-18 15:28:45
  */
 @Service
-public class UserServiceImpl  extends BaseServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Autowired
     private UserDAO userDao;
 
     @Override
     public User saveUser(User user) {
-        UserDO userDo=convertIgnoreNullProperty(user,UserDO.class);
+        UserDO userDo = convertIgnoreNullProperty(user, UserDO.class);
         UserDO userDoSaved = userDao.save(userDo);
-        User userSaved=convertIgnoreNullProperty(userDoSaved,User.class);
+        User userSaved = convertIgnoreNullProperty(userDoSaved, User.class);
         return userSaved;
+    }
+
+    public List<User> findAllUser() {
+        List<User> userList = convertList(IterableUtils.convertToList(userDao.findAll()), User.class);
+        return userList;
     }
 }

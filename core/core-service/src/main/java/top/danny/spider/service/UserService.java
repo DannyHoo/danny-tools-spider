@@ -2,6 +2,8 @@ package top.danny.spider.service;
 
 import top.danny.spider.model.bean.User;
 
+import java.util.List;
+
 /**
  * @author huyuyang@lxfintech.com
  * @Title: UserService
@@ -12,4 +14,7 @@ import top.danny.spider.model.bean.User;
  */
 public interface UserService {
     public User saveUser(User user);
+
+    public List<User> findAllUser();
+
 }

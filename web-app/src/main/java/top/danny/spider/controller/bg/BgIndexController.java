@@ -39,10 +39,7 @@ public class BgIndexController {
         return "bg/index";
     }
 
-    @RequestMapping("/test")
-    public String test(){
-        return "bg/test";
-    }
+
 
     @RequestMapping("/tables")
     public String tables(){

@@ -15,8 +15,8 @@
     <!-- 右侧内容 -->
     <div class="tpl-header-fluid">
         <!-- 侧边切换 -->
-        <div class="am-fl tpl-header-switch-button am-icon-list">
-            <span></span>
+        <div class="am-fl tpl-header-switch-button am-icon-list" style="height:55px;">
+            <span style="margin-top:20px;"></span>
         </div>
 
         <!-- 顶部搜索 -->

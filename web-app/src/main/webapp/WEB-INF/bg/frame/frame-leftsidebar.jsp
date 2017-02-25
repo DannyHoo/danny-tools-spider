@@ -24,14 +24,15 @@
     <!-- 菜单 -->
     <ul class="sidebar-nav">
         <li class="sidebar-nav-heading">Components <span class="sidebar-nav-heading-info"> 附加组件</span></li>
-        <li class="sidebar-nav-link">
-            <a href="/bg/usermanager.html" class="active">
-                <i class="am-icon-home sidebar-nav-link-logo"></i> 用户管理
-            </a>
-        </li>
+
         <li class="sidebar-nav-link">
             <a href="/bg/index.html" class="active">
                 <i class="am-icon-home sidebar-nav-link-logo"></i> 首页
+            </a>
+        </li>
+        <li class="sidebar-nav-link">
+            <a href="/bg/user/manager.html">
+                <i class="am-icon-user sidebar-nav-link-logo"></i> 用户管理
             </a>
         </li>
         <li class="sidebar-nav-link">
