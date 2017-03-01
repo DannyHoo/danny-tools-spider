@@ -1,4 +1,4 @@
-package top.danny.spider.controller.component;
+package top.danny.spider.service.component;
 
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class DemoTimer {
 
     @Scheduled(cron = "0 0 1/2 * * ?" )
     public void demoTest(){
-        saveUserTest();
+
     }
 
     public void saveUserTest() {

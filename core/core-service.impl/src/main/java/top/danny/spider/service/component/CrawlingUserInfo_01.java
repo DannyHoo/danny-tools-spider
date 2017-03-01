@@ -1,11 +1,12 @@
-package integration;
+package top.danny.spider.service.component;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import tom.danny.spider.htmlunit.base.RequestData;
 import tom.danny.spider.htmlunit.base.RequestSender;
 import top.danny.spider.model.bean.User;
@@ -16,21 +17,27 @@ import java.util.List;
 
 /**
  * @author huyuyang@lxfintech.com
- * @Title: CrawlingUserInfoTest
+ * @Title: CrawlingUserInfo
  * @Copyright: Copyright (c) 2016
  * @Description:
  * @Company: lxjr.com
- * @Created on 2017-02-25 20:29:36
+ * @Created on 2017-02-25 17:14:04
  */
-public class CrawlingUserInfoTest extends BaseServiceSpringTest{
+@Component("crawlingUserInfo_01")
+public class CrawlingUserInfo_01 implements CrawlingUserInfo{
+    final String url = "http://www.bangnishouji.com/idcard/201501/154142_6.html";
 
     @Autowired
     private UserService userService;
 
-    @Test
-    public void test() {
+    @Scheduled(cron = "0 1/30 * * * ?")
+    public void execute() {
+
+    }
+
+    public boolean run(){
         saveUser();
-        System.out.println("d");
+        return true;
     }
 
     public void saveUser() {
@@ -55,7 +62,6 @@ public class CrawlingUserInfoTest extends BaseServiceSpringTest{
 
     public List<User> getUserList() {
         List<User> userList = new ArrayList<User>(100);
-        final String url = "http://www.bangnishouji.com/idcard/201501/154142_6.html";
         RequestData requestData = new RequestData("UTF-8", url, "GET");
         HtmlPage requestResultPage = (HtmlPage) RequestSender.requestAndReturn(requestData);
 

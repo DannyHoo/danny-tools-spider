@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import top.danny.spider.model.bean.User;
 import top.danny.spider.service.UserService;
 
-import java.util.Date;
-
 /**
  * @author huyuyang@lxfintech.com
  * @Title: BgIndexController
@@ -25,21 +23,8 @@ public class BgIndexController {
 
     @RequestMapping("/index")
     public String index(){
-        User user = new User();
-        user.setUserName("danny")
-                .setPassword("123456")
-                .setRealName("访问者")
-                .setIdCardNo("187302199009098918")
-                .setMobileNo("18730984987")
-                .setAge(26)
-                .setBirthday(new Date())
-        ;
-
-        User userSaved = userService.saveUser(user);
         return "bg/index";
     }
-
-
 
     @RequestMapping("/tables")
     public String tables(){

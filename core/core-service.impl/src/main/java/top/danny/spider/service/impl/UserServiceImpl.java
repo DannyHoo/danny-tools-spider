@@ -1,6 +1,8 @@
 package top.danny.spider.service.impl;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -28,6 +30,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Autowired
     private UserDAO userDao;
 
+    /**
+     * 保存用户
+     * @param user
+     * @return
+     */
     @Override
     public User saveUser(User user) {
         UserDO userDo = convertIgnoreNullProperty(user, UserDO.class);
@@ -36,8 +43,35 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         return userSaved;
     }
 
+    /**
+     * 查询所有用户
+     * @return
+     */
     public List<User> findAllUser() {
         List<User> userList = convertList(IterableUtils.convertToList(userDao.findAll()), User.class);
         return userList;
+    }
+
+    /**
+     * 分页查询用户
+     * @param pageNumber
+     * @param pagzSize
+     * @return
+     */
+    public List<User> findUserPage(int pageNumber, int pagzSize) {
+        PageRequest request=buildPageRequest(pageNumber,pagzSize);
+        List<User> userList = convertList(IterableUtils.convertToList(userDao.findAll(request)), User.class);
+        return userList;
+    }
+
+    /**
+     * 构建PageRequest(分页)
+     * @param pageNumber
+     * @param pagzSize
+     * @return
+     */
+    private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
+        Sort sort = new Sort(Sort.Direction.DESC, "id");//按id倒序查询
+        return new PageRequest(pageNumber - 1, pagzSize, sort);
     }
 }

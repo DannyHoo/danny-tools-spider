@@ -1,41 +1,52 @@
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Amaze UI Admin index Examples</title>
-    <meta name="description" content="这是一个 index 页面">
-    <meta name="keywords" content="index">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
-    <link rel="icon" type="image/png" href="assets/i/favicon.png">
-    <link rel="apple-touch-icon-precomposed" href="assets/i/app-icon72x72@2x.png">
-    <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
-    <script src="http://cdn.bootcss.com/echarts/3.3.2/echarts.min.js"></script>
-    <link rel="stylesheet" href="/css/bg/amazeui.min.css"/>
-    <link rel="stylesheet" href="/css/bg/amazeui.datatables.min.css"/>
-    <link rel="stylesheet" href="/css/bg/app.css">
-    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-
-</head>
+<%
+include("../frame/common-header-resources.html"){}
+%>
 
 <body data-type="widgets">
 <script src="/js/bg/theme.js"></script>
+<script type="text/javascript">
+
+    function alertdanny() {
+        alert("danny");
+        $.ajax({
+            type: "POST",
+            url: "/bg/user/getUserPage",
+            dataType: "json",
+            data: {
+                /*"activityId": activityId*/
+            },
+            async: false,
+            success: function (data) {
+                alert(data.a);
+                /*if (0 == data.a) {
+                    layer.alert('请您先登录哦亲~', {
+                        icon: 5,
+                        closeBtn: 0
+                    }, function () {
+                        window.location.href = "https://www.puhuilicai.com/ssl/toLogin.htm";
+                    });
+                }*/
+
+                $("#table-user tbody").html(data.userListData);
+            }
+        });
+    }
+</script>
+
 <div class="am-g tpl-g">
     <!-- 头部 -->
     <%
-    include("frame/frame-header.html"){}
+    include("../frame/frame-header.html"){}
     %>
 
     <!-- 风格切换 -->
     <%
-    include("frame/frame-skiner.html"){}
+    include("../frame/frame-skiner.html"){}
     %>
 
     <!-- 侧边导航栏 -->
     <%
-    include("frame/frame-leftsidebar.html"){}
+    include("../frame/frame-leftsidebar.html"){}
     %>
 
     <!-- 内容区域 -->
@@ -55,7 +66,8 @@
                                 <div class="am-form-group">
                                     <div class="am-btn-toolbar">
                                         <div class="am-btn-group am-btn-group-xs">
-                                            <button type="button" class="am-btn am-btn-default am-btn-success"><span
+                                            <button type="button" class="am-btn am-btn-default am-btn-success"
+                                                    onclick="alertdanny();"><span
                                                     class="am-icon-plus"></span> 新增
                                             </button>
                                             <button type="button" class="am-btn am-btn-default am-btn-secondary"><span
@@ -96,7 +108,7 @@
 
                             <div class="am-u-sm-12">
                                 <table width="100%" class="am-table am-table-compact am-table-striped tpl-table-black "
-                                       id="example-r">
+                                       id="table-user">
                                     <thead>
                                     <tr>
                                         <th>用户名</th>
@@ -108,7 +120,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <%
+                                    <!--<%
                                     for(user in userList){
                                     %>
                                     <tr class="gradeX">
@@ -131,7 +143,7 @@
                                     </tr>
                                     <%
                                     }
-                                    %>
+                                    %>-->
 
                                     <!-- more data -->
                                     </tbody>
@@ -141,10 +153,10 @@
 
                                 <div class="am-fr">
                                     <ul class="am-pagination tpl-pagination">
-                                        <li class="am-disabled"><a href="#">«</a></li>
-                                        <li class="am-active"><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
+                                        <li class="am-disabled"><a href="/index">«</a></li>
+                                        <li class="am-active"><a href="/bg/index">1</a></li>
+                                        <li><a href="/bg/user/getUserPage">2</a></li>
+                                        <li><a href="javascript:alertdanny();">3</a></li>
                                         <li><a href="#">4</a></li>
                                         <li><a href="#">5</a></li>
                                         <li><a href="#">»</a></li>

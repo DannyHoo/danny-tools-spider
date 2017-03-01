@@ -1,10 +1,9 @@
-package top.danny.spider.controller.component;
+package top.danny.spider.service.component;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -24,21 +23,30 @@ import java.util.List;
  * @Company: lxjr.com
  * @Created on 2017-02-25 17:14:04
  */
-@Component
-public class CrawlingUserInfo2 {
+@Component("crawlingUserInfo_02")
+public class CrawlingUserInfo_02 implements CrawlingUserInfo {
+    final String url = "http://shenfenzheng.293.net/";
 
     @Autowired
     private UserService userService;
 
-    @Test
-    public void test() {
+    @Scheduled(cron = "0 1/30 * * * ?")
+    public void execute() {
+
+    }
+
+    public boolean run() {
         saveUser();
+        return true;
     }
 
     public void saveUser() {
         List<User> userList = new ArrayList<User>();
         try {
-            userList = getUserList();
+            //userList = getUserList();
+            while(userList.size()<1){
+                userList=getUserList();
+            }
             System.out.println("userList大小：" + userList.size());
         } catch (Exception e) {
             System.out.println("发生异常");
@@ -47,7 +55,7 @@ public class CrawlingUserInfo2 {
         long startTime = System.currentTimeMillis();
         System.out.println("开始插入:");
         for (User user : userList) {
-            User userSaved = userService.saveUser(getUser("danny", "324123", 2, 22, "asfadfadfadsf"));
+            User userSaved = userService.saveUser(user);
             System.out.println("插入数据:" + user.getRealName());
         }
         long endTime = System.currentTimeMillis();
@@ -57,11 +65,10 @@ public class CrawlingUserInfo2 {
 
     public List<User> getUserList() {
         List<User> userList = new ArrayList<User>(100);
-        final String url = "http://www.bangnishouji.com/idcard/201501/154142_6.html";
         RequestData requestData = new RequestData("UTF-8", url, "GET");
         HtmlPage requestResultPage = (HtmlPage) RequestSender.requestAndReturn(requestData);
 
-        List list = requestResultPage.getByXPath("/html/body/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/table");
+        List list = requestResultPage.getByXPath("/html/body/table[3]/tbody/tr/td[1]/table/tbody/tr[3]/td/table[2]");
         HtmlTable table = (HtmlTable) list.get(0);
         List<HtmlTableRow> htmlTableRowList = table.getRows();
         for (HtmlTableRow htmlTableRow : htmlTableRowList) {

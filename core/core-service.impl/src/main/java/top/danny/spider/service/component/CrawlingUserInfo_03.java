@@ -1,12 +1,10 @@
-package top.danny.spider.controller.component;
+package top.danny.spider.service.component;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTable;
 import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
 import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.internal.ExactComparisonCriteria;
+import com.gargoylesoftware.htmlunit.javascript.host.html.HTMLDivElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -16,7 +14,6 @@ import top.danny.spider.model.bean.User;
 import top.danny.spider.service.UserService;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,47 +24,56 @@ import java.util.List;
  * @Company: lxjr.com
  * @Created on 2017-02-25 17:14:04
  */
-@Component
-public class CrawlingUserInfo {
+@Component("crawlingUserInfo_03")
+public class CrawlingUserInfo_03 implements CrawlingUserInfo {
+    final String url = "http://www.hackdos.com/Article/9/qzone/qqb/html/22998.html";
 
     @Autowired
     private UserService userService;
 
-    @Scheduled(cron = "0 1/2 * * * ?")
-    public void demoTest() {
+    @Scheduled(cron = "0 1/30 * * * ?")
+    public void execute() {
 
     }
 
+    public boolean run() {
+        saveUser();
+        return true;
+    }
+
     public void saveUser() {
-        List<User> userList=new ArrayList<User>();
-        try{
-            userList=getUserList();
-            System.out.println("userList大小："+userList.size());
-        }catch (Exception e){
+        List<User> userList = new ArrayList<User>();
+        try {
+            //userList = getUserList();
+            while(userList.size()<1){
+                userList=getUserList();
+            }
+            System.out.println("userList大小：" + userList.size());
+        } catch (Exception e) {
             System.out.println("发生异常");
         }
 
-        long startTime=System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
         System.out.println("开始插入:");
-        for (User user:userList){
+        for (User user : userList) {
             User userSaved = userService.saveUser(user);
-            System.out.println("插入数据:"+user.getRealName());
+            System.out.println("插入数据:" + user.getRealName());
         }
-        long endTime=System.currentTimeMillis();
-        System.out.println("插入结束，插入数据行数：+"+userList.size()+"；耗时："+(endTime-startTime));
+        long endTime = System.currentTimeMillis();
+        System.out.println("插入结束，插入数据行数：+" + userList.size() + "；耗时：" + (endTime - startTime));
     }
 
 
     public List<User> getUserList() {
         List<User> userList = new ArrayList<User>(100);
-        final String url = "http://www.bangnishouji.com/idcard/201501/154142_6.html";
         RequestData requestData = new RequestData("UTF-8", url, "GET");
         HtmlPage requestResultPage = (HtmlPage) RequestSender.requestAndReturn(requestData);
 
-        List list = requestResultPage.getByXPath("/html/body/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/table");
-        HtmlTable table = (HtmlTable) list.get(0);
-        List<HtmlTableRow> htmlTableRowList = table.getRows();
-        for (HtmlTableRow htmlTableRow : htmlTableRowList) {
+        List list = requestResultPage.getByXPath("/html/body/div[6]/div[2]/div[2]/div[3]");
+        //HTMLDivElement div = (HTMLDivElement) list.get(0);
+        //String userInfo=div.getTextContent();
+
+        /*for (HtmlTableRow htmlTableRow : htmlTableRowList) {
             String a = htmlTableRow.getAlignAttribute();
             List<HtmlTableCell> htmlTableCellList = htmlTableRow.getCells();
             String nameAndIdCardStr = htmlTableCellList.get(0).asText();//41150319740118630 唐玄子
@@ -79,22 +85,23 @@ public class CrawlingUserInfo {
             String idCard = nameAndIdCardArr[0];
             String realName = nameAndIdCardStr.replace(idCard, "");
             int sex = getSex(sexStr);
-            int age=getAge(ageStr);
+            int age = getAge(ageStr);
             userList.add(getUser(realName, idCard, sex, age, address));
-        }
+        }*/
         return userList;
     }
 
     private int getAge(String ageStr) {
-        try{
+        try {
             return Integer.parseInt(ageStr);
-        }catch (Exception e){
+        } catch (Exception e) {
             return 0;//年龄未知
         }
     }
 
     private User getUser(String realName, String idCard, int sex, int age, String address) {
         User user = new User().
+                setUserName(idCard).
                 setRealName(realName)
                 .setIdCardNo(idCard)
                 .setSex(sex)
@@ -108,10 +115,10 @@ public class CrawlingUserInfo {
             return sexInt;//默认未知
         }
         if (sex.equals("男")) {
-            sexInt=1;
+            sexInt = 1;
         }
         if (sex.equals("女")) {
-            sexInt=2;
+            sexInt = 2;
         }
         return sexInt;
     }

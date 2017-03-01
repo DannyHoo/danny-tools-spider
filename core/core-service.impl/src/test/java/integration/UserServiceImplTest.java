@@ -7,6 +7,7 @@ import top.danny.spider.model.bean.User;
 import top.danny.spider.service.UserService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author huyuyang@lxfintech.com
@@ -38,5 +39,13 @@ public class UserServiceImplTest extends BaseServiceSpringTest {
                 .setBirthday(new Date())
         ;
         return user;
+    }
+
+    @Test
+    public void findUserPageTest(){
+        List<User> userList=userService.findUserPage(1,10);
+        for (User user:userList){
+            System.out.println(user.getRealName());
+        }
     }
 }

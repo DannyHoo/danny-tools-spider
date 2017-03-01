@@ -13,8 +13,25 @@ import java.util.List;
  * @Created on 2017-02-18 15:28:58
  */
 public interface UserService {
+
+    /**
+     * 保存用户
+     * @param user
+     * @return
+     */
     public User saveUser(User user);
 
+    /**
+     * 查询所有用户
+     * @return
+     */
     public List<User> findAllUser();
 
+    /**
+     * 分页查询用户
+     * @param pageNumber
+     * @param pagzSize
+     * @return
+     */
+    public List<User> findUserPage(int pageNumber, int pagzSize);
 }
