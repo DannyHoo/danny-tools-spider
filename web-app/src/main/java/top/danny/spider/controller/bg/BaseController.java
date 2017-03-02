@@ -1,5 +1,6 @@
 package top.danny.spider.controller.bg;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -32,6 +33,28 @@ public class BaseController {
      */
     public int getPageSize(Map map){
         Object object=map.get(pageSizeFlag);
+        int pageNumber=object==null?10:Integer.parseInt(object.toString());
+        return pageNumber;
+    }
+
+    /**
+     * 根据request获取当前页数
+     * @param request
+     * @return
+     */
+    public int getPageNumber(HttpServletRequest request){
+        Object object=request.getParameter(pageNumberFlag);
+        int pageNumber=object==null?1:Integer.parseInt(object.toString());
+        return pageNumber;
+    }
+
+    /**
+     * 根据request获取页数大小
+     * @param request
+     * @return
+     */
+    public int getPageSize(HttpServletRequest request){
+        Object object=request.getParameter(pageSizeFlag);
         int pageNumber=object==null?10:Integer.parseInt(object.toString());
         return pageNumber;
     }

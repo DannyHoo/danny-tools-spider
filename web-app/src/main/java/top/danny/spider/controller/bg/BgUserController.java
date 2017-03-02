@@ -3,6 +3,7 @@ package top.danny.spider.controller.bg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import top.danny.spider.model.bean.User;
@@ -39,6 +40,13 @@ public class BgUserController extends BaseController {
         return modelAndView;
     }
 
+    @RequestMapping("/index")
+    public ModelAndView index(Map map) {
+
+        ModelAndView modelAndView = new ModelAndView("bg/user/index");
+        return modelAndView;
+    }
+
     @RequestMapping("/getUserList")
     @ResponseBody
     public List<User> getUserList() {
@@ -50,7 +58,11 @@ public class BgUserController extends BaseController {
     @ResponseBody
     public Map<String, Object> getUserPage(HttpServletRequest request, HttpSession session) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
-        List<User> userList = userService.findUserPage(1, 10);
+        int pageNumber = getPageNumber(request);
+        pageNumber=Integer.parseInt(request.getParameter("pageNumber"));
+        int pageSize = getPageSize(request);
+        pageSize=Integer.parseInt(request.getParameter("pageSize"));
+        List<User> userList = userService.findUserPage(pageNumber, pageSize);
         resultMap.put("userListData", getListData(userList));
         return resultMap;
     }
@@ -58,7 +70,7 @@ public class BgUserController extends BaseController {
 
     public String getListData(List<User> userList) {
         StringBuffer stringBuffer = new StringBuffer();
-        for (User user:userList){
+        for (User user : userList) {
             stringBuffer.append("<tr class=\"gradeX\"><td>")
                     .append(user.getUserName())
                     .append("</td><td>")
