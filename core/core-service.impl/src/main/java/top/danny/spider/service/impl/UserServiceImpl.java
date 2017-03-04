@@ -1,20 +1,17 @@
 package top.danny.spider.service.impl;
 
-import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 import top.danny.spider.dao.data.UserDO;
 import top.danny.spider.dao.jpa.UserDAO;
+import top.danny.spider.model.bean.PageModel;
 import top.danny.spider.model.bean.User;
 import top.danny.spider.service.UserService;
 import top.danny.spider.utils.IterableUtils;
 
-import javax.servlet.ServletContext;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,15 +52,17 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     /**
      * 分页查询用户
      * @param pageNumber
-     * @param pagzSize
+     * @param pageSize
      * @return
      */
-    public List<User> findUserPage(int pageNumber, int pagzSize) {
-        PageRequest request=buildPageRequest(pageNumber,pagzSize);
-        List<User> userList = convertList(IterableUtils.convertToList(userDao.findAll(request)), User.class);
-        return userList;
+    public PageModel<User> findUserPage(int pageNumber,int pageSize){
+        PageModel<User> userPageModel=new PageModel<User>();
+        PageRequest request=buildPageRequest(pageNumber,pageSize);
+        Page<UserDO> userDOPage=userDao.findAll(request);
+        userPageModel.setList(convertList(IterableUtils.convertToList(userDOPage), User.class));
+        userPageModel.setTotalRecords(userDOPage.getTotalPages());
+        return userPageModel;
     }
-
     /**
      * 构建PageRequest(分页)
      * @param pageNumber

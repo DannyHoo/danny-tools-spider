@@ -1,5 +1,6 @@
 package top.danny.spider.service;
 
+import top.danny.spider.model.bean.PageModel;
 import top.danny.spider.model.bean.User;
 
 import java.util.List;
@@ -33,5 +34,5 @@ public interface UserService {
      * @param pagzSize
      * @return
      */
-    public List<User> findUserPage(int pageNumber, int pagzSize);
+    public PageModel<User> findUserPage(int pageNumber, int pagzSize);
 }

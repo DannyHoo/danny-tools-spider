@@ -43,9 +43,6 @@ public class UserServiceImplTest extends BaseServiceSpringTest {
 
     @Test
     public void findUserPageTest(){
-        List<User> userList=userService.findUserPage(1,10);
-        for (User user:userList){
-            System.out.println(user.getRealName());
-        }
+
     }
 }

@@ -1,11 +1,13 @@
 package top.danny.spider.controller.bg;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import top.danny.spider.model.bean.PageModel;
 import top.danny.spider.model.bean.User;
 import top.danny.spider.service.UserService;
 
@@ -30,28 +32,19 @@ public class BgUserController extends BaseController {
     private UserService userService;
 
     @RequestMapping("/manager")
-    public ModelAndView manager(Map map) {
-        int pageNumber = getPageNumber(map);
-        int pagzSize = getPageSize(map);
-        List<User> userList = userService.findUserPage(pageNumber, pagzSize);
+    public ModelAndView manager(HttpServletRequest request, HttpSession session) {
+        int pageNumber = getPageNumber(request);
+        int pageSize = getPageSize(request);
+        PageModel<User> userPageModel = userService.findUserPage(pageNumber, pageSize);
         ModelAndView modelAndView = new ModelAndView("bg/user/manager");
-        modelAndView.addObject("userList", userList);
-        modelAndView.addObject("a", "danny");
+        modelAndView.addObject("totalRecords", userPageModel.getTotalRecords());
         return modelAndView;
     }
 
     @RequestMapping("/index")
-    public ModelAndView index(Map map) {
-
+    public ModelAndView index(HttpServletRequest request, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("bg/user/index");
         return modelAndView;
-    }
-
-    @RequestMapping("/getUserList")
-    @ResponseBody
-    public List<User> getUserList() {
-        List<User> userList = userService.findUserPage(1, 10);
-        return userList;
     }
 
     @RequestMapping("/getUserPage")
@@ -59,14 +52,12 @@ public class BgUserController extends BaseController {
     public Map<String, Object> getUserPage(HttpServletRequest request, HttpSession session) {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         int pageNumber = getPageNumber(request);
-        pageNumber=Integer.parseInt(request.getParameter("pageNumber"));
         int pageSize = getPageSize(request);
-        pageSize=Integer.parseInt(request.getParameter("pageSize"));
-        List<User> userList = userService.findUserPage(pageNumber, pageSize);
-        resultMap.put("userListData", getListData(userList));
+        PageModel<User> userPageModel = userService.findUserPage(pageNumber, pageSize);
+        resultMap.put("userListData", userPageModel.getList());
+        resultMap.put("totalRecords", userPageModel.getTotalRecords());
         return resultMap;
     }
-
 
     public String getListData(List<User> userList) {
         StringBuffer stringBuffer = new StringBuffer();
