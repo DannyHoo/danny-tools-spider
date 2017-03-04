@@ -23,7 +23,7 @@ public class UserDAOTest extends BaseDaoSpringTest {
     private UserDAO userDao;
 
     @Test
-    @Rollback(false)
+    @Rollback(true)
     public void saveUserTest(){
         UserDO userDo=getUserDO();
         UserDO userDoSaved=userDao.save(userDo);
