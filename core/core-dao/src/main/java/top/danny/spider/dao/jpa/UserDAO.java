@@ -1,5 +1,6 @@
 package top.danny.spider.dao.jpa;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import top.danny.spider.dao.data.UserDO;
@@ -14,4 +15,7 @@ import top.danny.spider.dao.data.UserDO;
  */
 public interface UserDAO extends PagingAndSortingRepository<UserDO,Long> {
 
+    @Modifying
+    @Query("update UserDO u set u.userName=?2 where u.id=?1")
+    public int updateUserName(Long userId,String userName);
 }

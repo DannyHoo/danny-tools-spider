@@ -6,8 +6,12 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import top.danny.spider.dao.data.UserDO;
+import top.danny.spider.utils.ChinesePinYin;
+import top.danny.spider.utils.IterableUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author huyuyang@lxfintech.com
@@ -42,5 +46,16 @@ public class UserDAOTest extends BaseDaoSpringTest {
                 .setBirthday(new Date())
         ;
         return userDo;
+    }
+
+    @Test
+    @Rollback(false)
+    public void updateUserTest(){
+        List<UserDO> userList= IterableUtils.convertToList(userDao.findAll());
+        for (UserDO user:userList){
+            user.setUserName(ChinesePinYin.getPingYin(user.getRealName()));
+            userDao.updateUserName(user.getId(),user.getUserName());
+        }
+
     }
 }
