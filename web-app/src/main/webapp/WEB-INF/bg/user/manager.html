@@ -173,7 +173,7 @@ include("../frame/common-header-resources.html"){}
             first: "首页",
             last: "尾页", //false则不显示
             before: function (context, next) { //加载前触发，如果没有执行next()则中断加载
-                console.log('开始加载...');
+                //console.log('开始加载...');
                 context.time = (new Date()).getTime(); //只是演示，并没有什么卵用，可以保存一些数据到上下文中
                 next();
             },
@@ -187,7 +187,7 @@ include("../frame/common-header-resources.html"){}
             },
             after: function (context, next) { //加载完成后触发
                 var time = (new Date()).getTime(); //没有什么卵用的演示
-                console.log('分页组件加载完毕，耗时：' + (time - context.time) + 'ms');
+                //console.log('分页组件加载完毕，耗时：' + (time - context.time) + 'ms');
                 next();
             },
             /*
