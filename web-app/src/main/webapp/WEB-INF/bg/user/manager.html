@@ -4,47 +4,6 @@ include("../frame/common-header-resources.html"){}
 
 <body data-type="widgets">
 <script src="/js/bg/theme.js"></script>
-<script type="text/javascript">
-
-    function page(pageNumber, pageSize) {
-        $.ajax({
-            type: "POST",
-            url: "/bg/user/getUserPage",
-            dataType: "json",
-            data: {
-                "pageNumber": pageNumber,
-                "pageSize": pageSize
-            },
-            async: false,
-            success: function (data) {
-                var userListData = data.userListData;
-                var result = "";
-                for (var user in userListData) {
-                    result = result +
-                            "<tr class=\"gradeX\"><td>" +
-                            userListData[user].userName +
-                            "</td><td>" +
-                            userListData[user].realName +
-                            "</td><td>" +
-                            userListData[user].idCardNo +
-                            "</td><td>" +
-                            userListData[user].mobileNo +
-                            "</td><td>" +
-                            userListData[user].email +
-                            "</td><td>" +
-                            userListData[user].birthday +
-                            "</td><td><div class=\"tpl-table-black-operation\">" +
-                            "<a href=\"javascript:;\"><i class=\"am-icon-pencil\"></i>编辑</a>" +
-                            "<a href=\"javascript:;\" class=\"tpl-table-black-operation-del\"><i class=\"am-icon-trash\"></i>删除</a>" +
-                            "</div></td></tr>";
-                }
-                $("#table-user tbody").html(result);
-                $("#totalRecords").val(data.totalRecords);
-            }
-        });
-    }
-</script>
-
 
 
 <div class="am-g tpl-g">
@@ -81,7 +40,7 @@ include("../frame/common-header-resources.html"){}
                                     <div class="am-btn-toolbar">
                                         <div class="am-btn-group am-btn-group-xs">
                                             <button type="button" class="am-btn am-btn-default am-btn-success"
-                                                    onclick="alertdanny();"><span
+                                                    onclick="add();"><span
                                                     class="am-icon-plus"></span> 新增
                                             </button>
                                             <button type="button" class="am-btn am-btn-default am-btn-secondary"><span
@@ -158,10 +117,77 @@ include("../frame/common-header-resources.html"){}
     </div>
 </div>
 
+<script type="text/javascript">
+    function add() {
+        layer.open({
+            type: 1,
+            content: $('#userInfoLayer') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+            ,area: ['700px', '500px']
+            , btn: ['确定', '取消']
+            ,offset: ['50px','320px']
+            , yes: function (index, layero) {
+                //按钮【按钮一】的回调
+
+            }
+            ,
+            btn2: function (index, layero) {
+                //按钮【按钮二】的回调
+
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+            ,cancel: function(index, layero){
+                if(confirm('确定要关闭么')){
+                    layer.close(index)
+                }
+                return false;//return false 开启该代码可禁止点击该按钮关闭
+            }
+        });
+    }
+
+    function page(pageNumber, pageSize) {
+        $.ajax({
+            type: "POST",
+            url: "/bg/user/getUserPage",
+            dataType: "json",
+            data: {
+                "pageNumber": pageNumber,
+                "pageSize": pageSize
+            },
+            async: false,
+            success: function (data) {
+                var userListData = data.userListData;
+                var result = "";
+                for (var user in userListData) {
+                    result = result +
+                            "<tr class=\"gradeX\"><td>" +
+                            userListData[user].userName +
+                            "</td><td>" +
+                            userListData[user].realName +
+                            "</td><td>" +
+                            userListData[user].idCardNo +
+                            "</td><td>" +
+                            userListData[user].mobileNo +
+                            "</td><td>" +
+                            userListData[user].email +
+                            "</td><td>" +
+                            userListData[user].birthday +
+                            "</td><td><div class=\"tpl-table-black-operation\">" +
+                            "<a href=\"javascript:;\"><i class=\"am-icon-pencil\"></i>编辑</a>" +
+                            "<a href=\"javascript:;\" class=\"tpl-table-black-operation-del\"><i class=\"am-icon-trash\"></i>删除</a>" +
+                            "</div></td></tr>";
+                }
+                $("#table-user tbody").html(result);
+                $("#totalRecords").val(data.totalRecords);
+            }
+        });
+    }
+</script>
+
+
 <script>
     $(function () {
 
-        var totalRecords=$("#totalRecords").val()==null?2:$("#totalRecords").val();
+        var totalRecords = $("#totalRecords").val() == null ? 2 : $("#totalRecords").val();
         //返回的是一个page示例，拥有实例方法
         var $page = $("#page").page({
             pages: totalRecords, //页数
@@ -209,4 +235,110 @@ include("../frame/common-header-resources.html"){}
 
 </body>
 
+<div id="userInfoLayer">
+    <div class="row">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">线条表单</div>
+                    <div class="widget-function am-fr">
+                        <a href="javascript:;" class="am-icon-cog"></a>
+                    </div>
+                </div>
+                <div class="widget-body am-fr">
+
+                    <form class="am-form tpl-form-line-form">
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">标题 <span class="tpl-form-line-small-title">Title</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="text" class="tpl-form-input" id="user-name" placeholder="请输入标题文字">
+                                <small>请填写标题文字10-20字左右。</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-email" class="am-u-sm-3 am-form-label">发布时间 <span class="tpl-form-line-small-title">Time</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="text" class="am-form-field tpl-form-no-bg" placeholder="发布时间" data-am-datepicker="" readonly>
+                                <small>发布时间为必填</small>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-phone" class="am-u-sm-3 am-form-label">作者 <span class="tpl-form-line-small-title">Author</span></label>
+                            <div class="am-u-sm-9">
+                                <select data-am-selected="{searchBox: 1}" style="display: none;">
+                                    <option value="a">-The.CC</option>
+                                    <option value="b">夕风色</option>
+                                    <option value="o">Orange</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-3 am-form-label">SEO关键字 <span class="tpl-form-line-small-title">SEO</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="text" placeholder="输入SEO关键字">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-weibo" class="am-u-sm-3 am-form-label">封面图 <span class="tpl-form-line-small-title">Images</span></label>
+                            <div class="am-u-sm-9">
+                                <div class="am-form-group am-form-file">
+                                    <div class="tpl-form-file-img">
+                                        <img src="/img/bg/a5.png" alt="">
+                                    </div>
+                                    <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                        <i class="am-icon-cloud-upload"></i> 添加封面图片</button>
+                                    <input id="doc-form-file" type="file" multiple>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-weibo" class="am-u-sm-3 am-form-label">添加分类 <span class="tpl-form-line-small-title">Type</span></label>
+                            <div class="am-u-sm-9">
+                                <input type="text" id="user-weibo" placeholder="请添加分类用点号隔开">
+                                <div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-intro" class="am-u-sm-3 am-form-label">隐藏文章</label>
+                            <div class="am-u-sm-9">
+                                <div class="tpl-switch">
+                                    <input type="checkbox" class="ios-switch bigswitch tpl-switch-btn" checked="">
+                                    <div class="tpl-switch-btn-view">
+                                        <div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="user-intro" class="am-u-sm-3 am-form-label">文章内容</label>
+                            <div class="am-u-sm-9">
+                                <textarea class="" rows="10" id="user-intro" placeholder="请输入文章内容"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </html>
