@@ -22,9 +22,9 @@ public class DemoTimer {
     @Autowired
     private UserService userService;
 
-    @Scheduled(cron = "0 0 1/2 * * ?" )
+    @Scheduled(cron = "0/5 * * * * ?" )
     public void demoTest(){
-
+        System.out.println("hello");
     }
 
     public void saveUserTest() {

@@ -1,13 +1,11 @@
-package tom.danny.spider.htmlunit;
+package top.danny.spider.htmlunit;
 
 import com.gargoylesoftware.htmlunit.TextPage;
 import com.gargoylesoftware.htmlunit.WebResponse;
 import com.gargoylesoftware.htmlunit.html.*;
-import com.gargoylesoftware.htmlunit.javascript.host.html.HTMLDivElement;
-import org.eclipse.jetty.util.security.Credential;
 import org.junit.Test;
-import tom.danny.spider.htmlunit.base.RequestData;
-import tom.danny.spider.htmlunit.base.RequestSender;
+import top.danny.spider.htmlunit.base.RequestData;
+import top.danny.spider.htmlunit.base.RequestSender;
 
 import java.util.HashMap;
 import java.util.List;

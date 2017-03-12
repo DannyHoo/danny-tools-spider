@@ -1,4 +1,4 @@
-package tom.danny.spider.htmlunit.base;
+package top.danny.spider.htmlunit.base;
 
 import com.gargoylesoftware.htmlunit.HttpMethod;
 import com.gargoylesoftware.htmlunit.Page;

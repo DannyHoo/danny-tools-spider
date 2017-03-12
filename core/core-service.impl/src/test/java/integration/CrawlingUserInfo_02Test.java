@@ -19,13 +19,19 @@ public class CrawlingUserInfo_02Test extends BaseServiceSpringTest{
 
     //@Resource(name="crawlingUserInfo_02")
     @Autowired
-    @Qualifier("crawlingUserInfo_02")
+    @Qualifier("idCardCrawling")
     private CrawlingUserInfo crawlingUserInfo;
 
     @Test
     public void test() {
-        crawlingUserInfo.run();
-        System.out.println("");
+        while(true){
+            crawlingUserInfo.run();
+            try {
+                Thread.currentThread().sleep(30000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 

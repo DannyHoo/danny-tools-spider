@@ -1,15 +1,11 @@
 package top.danny.spider.service.component;
 
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
-import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
-import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
-import com.gargoylesoftware.htmlunit.javascript.host.html.HTMLDivElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import tom.danny.spider.htmlunit.base.RequestData;
-import tom.danny.spider.htmlunit.base.RequestSender;
+import top.danny.spider.htmlunit.base.RequestData;
+import top.danny.spider.htmlunit.base.RequestSender;
 import top.danny.spider.model.bean.User;
 import top.danny.spider.service.UserService;
 
@@ -31,7 +27,7 @@ public class CrawlingUserInfo_03 implements CrawlingUserInfo {
     @Autowired
     private UserService userService;
 
-    @Scheduled(cron = "0 1/30 * * * ?")
+    /*@Scheduled(cron = "0 1/30 * * * ?")*/
     public void execute() {
 
     }
