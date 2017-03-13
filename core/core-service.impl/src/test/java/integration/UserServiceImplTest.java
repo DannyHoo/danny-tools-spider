@@ -33,7 +33,7 @@ public class UserServiceImplTest extends BaseServiceSpringTest {
     }
 
     @Test
-    public void updateUserTest(){
+    public void updateUserTest1(){
         try{
             User user=userService.findUserById(1051L);
             String distirctName=user.getAddress().split(" ")[user.getAddress().split(" ").length-1];
