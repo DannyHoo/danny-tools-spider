@@ -3,7 +3,9 @@ package integration;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import top.danny.spider.model.bean.District;
 import top.danny.spider.model.bean.User;
+import top.danny.spider.service.DistrictService;
 import top.danny.spider.service.UserService;
 
 import java.util.Date;
@@ -20,12 +22,27 @@ import java.util.List;
 public class UserServiceImplTest extends BaseServiceSpringTest {
     @Autowired
     private UserService userService;
+    @Autowired
+    private DistrictService districtService;
 
     @Test
     public void saveUserTest(){
         User user=getUser();
         User userSaved=userService.saveUser(user);
         Assert.assertNotNull(userSaved);
+    }
+
+    @Test
+    public void updateUserTest(){
+        try{
+            User user=userService.findUserById(1051L);
+            String distirctName=user.getAddress().split(" ")[user.getAddress().split(" ").length-1];
+            District district=districtService.findDistrictByName(distirctName);
+            int result=userService.updateUser(user.setDistrictId(district.getId()));
+            Assert.assertTrue(result>0);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private User getUser() {

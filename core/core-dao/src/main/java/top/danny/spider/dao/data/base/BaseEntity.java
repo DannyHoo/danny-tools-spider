@@ -1,4 +1,4 @@
-package top.danny.spider.dao.data;
+package top.danny.spider.dao.data.base;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;

@@ -4,6 +4,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.core.NestedRuntimeException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
@@ -20,6 +22,17 @@ import java.util.Set;
  * @Created on 2017-02-18 16:33:41
  */
 public class BaseServiceImpl {
+
+    /**
+     * 构建PageRequest(分页)
+     * @param pageNumber
+     * @param pagzSize
+     * @return
+     */
+    protected PageRequest buildPageRequest(int pageNumber, int pagzSize) {
+        Sort sort = new Sort(Sort.Direction.DESC, "id");//按id倒序查询
+        return new PageRequest(pageNumber - 1, pagzSize, sort);
+    }
 
     protected <T> T convertIgnoreNullProperty(Object source, Class<T> targetClass) {
         return convert(source, targetClass);

@@ -171,12 +171,16 @@
             <artifactId>aspectjweaver</artifactId>
             <version>1.6.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/jstl/jstl -->
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <!--<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>1.7.12</version>
+        </dependency>-->
 
         <!--Beetle-->
         <dependency>

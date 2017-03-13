@@ -30,6 +30,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     /**
      * 保存用户
+     *
      * @param user
      * @return
      */
@@ -43,6 +44,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     /**
      * 查询所有用户
+     *
      * @return
      */
     public List<User> findAllUser() {
@@ -52,26 +54,38 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     /**
      * 分页查询用户
+     *
      * @param pageNumber
      * @param pageSize
      * @return
      */
-    public PageModel<User> findUserPage(int pageNumber,int pageSize){
-        PageModel<User> userPageModel=new PageModel<User>();
-        PageRequest request=buildPageRequest(pageNumber,pageSize);
-        Page<UserDO> userDOPage=userDao.findAll(request);
+    public PageModel<User> findUserPage(int pageNumber, int pageSize) {
+        PageModel<User> userPageModel = new PageModel<User>();
+        PageRequest request = buildPageRequest(pageNumber, pageSize);
+        Page<UserDO> userDOPage = userDao.findAll(request);
         userPageModel.setList(convertList(IterableUtils.convertToList(userDOPage), User.class));
         userPageModel.setTotalRecords(userDOPage.getTotalPages());
         return userPageModel;
     }
+
     /**
-     * 构建PageRequest(分页)
-     * @param pageNumber
-     * @param pagzSize
+     * 根据id查询用户
+     * @param userId
      * @return
      */
-    private PageRequest buildPageRequest(int pageNumber, int pagzSize) {
-        Sort sort = new Sort(Sort.Direction.DESC, "id");//按id倒序查询
-        return new PageRequest(pageNumber - 1, pagzSize, sort);
+    public User findUserById(Long userId){
+        User user=convertIgnoreNullProperty(userDao.findOne(userId),User.class);
+        return user;
+    }
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    public int updateUser(User user){
+        UserDO userDO=convertIgnoreNullProperty(user,UserDO.class);
+        int result=userDao.update(userDO);
+        return result;
     }
 }

@@ -1,5 +1,7 @@
 package top.danny.spider.dao.data;
 
+import top.danny.spider.dao.data.base.BaseEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;

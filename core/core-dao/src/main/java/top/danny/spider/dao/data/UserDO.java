@@ -1,5 +1,8 @@
 package top.danny.spider.dao.data;
 
+import org.hibernate.annotations.DynamicUpdate;
+import top.danny.spider.dao.data.base.BaseEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,6 +18,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name="t_user")
+@DynamicUpdate(true)
 public class UserDO extends BaseEntity {
 
     @Column(name = "userName",nullable = false)

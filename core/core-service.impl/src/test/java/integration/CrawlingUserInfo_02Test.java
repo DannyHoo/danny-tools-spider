@@ -27,7 +27,7 @@ public class CrawlingUserInfo_02Test extends BaseServiceSpringTest{
         while(true){
             crawlingUserInfo.run();
             try {
-                Thread.currentThread().sleep(30000);
+                Thread.currentThread().sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

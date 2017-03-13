@@ -27,6 +27,12 @@ public class UserDAOTest extends BaseDaoSpringTest {
     private UserDAO userDao;
 
     @Test
+    public void findUserTest(){
+        UserDO userDoSaved=userDao.findOne(1767L);
+        System.out.println(userDoSaved.getUserName());
+    }
+
+    @Test
     @Rollback(true)
     public void saveUserTest(){
         UserDO userDo=getUserDO();

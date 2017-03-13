@@ -35,4 +35,18 @@ public interface UserService {
      * @return
      */
     public PageModel<User> findUserPage(int pageNumber, int pagzSize);
+
+    /**
+     * 根据id查询用户
+     * @param userId
+     * @return
+     */
+    public User findUserById(Long userId);
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
+    public int updateUser(User user);
 }
