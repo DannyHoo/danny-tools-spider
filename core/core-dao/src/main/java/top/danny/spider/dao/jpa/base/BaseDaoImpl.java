@@ -26,6 +26,7 @@ public class BaseDaoImpl<T> extends SimpleJpaRepository<T, Long> implements Base
 
     public BaseDaoImpl(Class<T> domainClass, EntityManager entityManager) {
         super(domainClass, entityManager);
+        this.entityManager=entityManager;
     }
 
 

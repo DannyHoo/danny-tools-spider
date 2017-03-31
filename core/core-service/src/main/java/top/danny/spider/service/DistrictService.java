@@ -2,6 +2,8 @@ package top.danny.spider.service;
 
 import top.danny.spider.model.bean.District;
 
+import java.util.List;
+
 /**
  * @author huyuyang@lxfintech.com
  * @Title: DistrictService
@@ -17,5 +19,5 @@ public interface DistrictService {
      * @param districtName
      * @return
      */
-    public District findDistrictByName(String districtName);
+    public List<District> findDistrictByName(String districtName);
 }

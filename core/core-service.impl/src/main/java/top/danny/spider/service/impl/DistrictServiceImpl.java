@@ -7,6 +7,8 @@ import top.danny.spider.dao.jpa.DistrictDAO;
 import top.danny.spider.model.bean.District;
 import top.danny.spider.service.DistrictService;
 
+import java.util.List;
+
 /**
  * @author huyuyang@lxfintech.com
  * @Title: DistrictServiceImpl
@@ -26,9 +28,9 @@ public class DistrictServiceImpl extends BaseServiceImpl implements DistrictServ
      * @param districtName
      * @return
      */
-    public District findDistrictByName(String districtName){
-        DistrictDO districtDO=districtDAO.findByDistrictName(districtName);
-        District district=convertIgnoreNullProperty(districtDO,District.class);
-        return district;
+    public List<District> findDistrictByName(String districtName){
+        List<DistrictDO> districtDOList=districtDAO.findByDistrictName(districtName);
+        List<District> districtList=convertList(districtDOList,District.class);
+        return districtList;
     }
 }

@@ -2,6 +2,7 @@ package top.danny.spider.service.component;
 
 import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import top.danny.spider.model.bean.User;
@@ -24,6 +25,7 @@ public class DemoTimer {
 
     @Scheduled(cron = "0/5 * * * * ?" )
     public void demoTest(){
+
         System.out.println("hello");
     }
 

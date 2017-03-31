@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import top.danny.spider.dao.data.DistrictDO;
 
+import java.util.List;
+
 /**
  * @author huyuyang@lxfintech.com
  * @Title: DistrictDAOTest
@@ -20,10 +22,10 @@ public class DistrictDAOTest extends BaseDaoSpringTest {
 
     @Test
     public void findDistrictTest(){
-        DistrictDO districtDO=districtDAO.findByDistrictName("东城区");
+        List<DistrictDO> districtDO=districtDAO.findByDistrictName("东城区");
         Assert.assertNotNull(districtDO);
         if (districtDO!=null){
-            System.out.println(districtDO.getCityID());
+            System.out.println(districtDO.get(0).getCityID());
         }
     }
 }

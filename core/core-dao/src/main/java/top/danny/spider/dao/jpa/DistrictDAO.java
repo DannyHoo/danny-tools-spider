@@ -1,8 +1,11 @@
 package top.danny.spider.dao.jpa;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import top.danny.spider.dao.data.DistrictDO;
 import top.danny.spider.dao.jpa.base.BaseDao;
+
+import java.util.List;
 
 /**
  * @author huyuyang@lxfintech.com
@@ -14,5 +17,5 @@ import top.danny.spider.dao.jpa.base.BaseDao;
  */
 public interface DistrictDAO extends BaseDao<DistrictDO>,PagingAndSortingRepository<DistrictDO,Long> {
 
-    public DistrictDO findByDistrictName(String districtName);
+    public List<DistrictDO> findByDistrictName(String districtName);
 }

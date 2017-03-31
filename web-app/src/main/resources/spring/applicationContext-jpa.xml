@@ -56,6 +56,8 @@
 
     <jpa:repositories base-package="top.danny.spider.dao.jpa"
                       entity-manager-factory-ref="myEmf"
-                      transaction-manager-ref="transactionManager"/>
+                      transaction-manager-ref="transactionManager"
+                      factory-class="top.danny.spider.dao.jpa.base.BaseDaoRepositoryFactoryBean"
+    />
 
 </beans>

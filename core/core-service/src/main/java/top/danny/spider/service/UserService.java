@@ -49,4 +49,11 @@ public interface UserService {
      * @return
      */
     public int updateUser(User user);
+
+    /**
+     * 删除用户信息
+     * @param userId
+     * @return
+     */
+    public int deleteUserById(Long userId);
 }

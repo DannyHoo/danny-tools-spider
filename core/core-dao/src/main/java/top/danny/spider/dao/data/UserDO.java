@@ -54,6 +54,9 @@ public class UserDO extends BaseEntity {
     @Column(name="age")
     private Integer age;
 
+    @Column(name="districtId")
+    private Long districtId;
+
     public String getUserName() {
         return userName;
     }
@@ -150,6 +153,15 @@ public class UserDO extends BaseEntity {
 
     public UserDO setAge(Integer age) {
         this.age = age;
+        return this;
+    }
+
+    public Long getDistrictId() {
+        return districtId;
+    }
+
+    public UserDO setDistrictId(Long districtId) {
+        this.districtId = districtId;
         return this;
     }
 }
