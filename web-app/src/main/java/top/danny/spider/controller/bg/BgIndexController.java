@@ -43,7 +43,7 @@ public class BgIndexController {
 
     @RequestMapping("/chart")
     public String chart(){
-        return "bg/chart";
+        return "bg/chart/chart";
     }
 
 
