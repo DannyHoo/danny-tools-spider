@@ -8,6 +8,10 @@ import top.danny.spider.model.bean.User;
 import top.danny.spider.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.StringTokenizer;
 

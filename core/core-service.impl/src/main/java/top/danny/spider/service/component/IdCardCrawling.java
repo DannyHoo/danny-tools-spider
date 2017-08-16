@@ -31,7 +31,7 @@ public class IdCardCrawling implements CrawlingUserInfo{
 
     private final static String url = "http://shenfenzheng.293.net/";
 
-    @Scheduled(cron = "0 * * * * ?")
+    //@Scheduled(cron = "0 * * * * ?")
     public void execute() {
         System.out.println("开始爬取……");
         run();

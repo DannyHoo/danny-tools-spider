@@ -22,7 +22,7 @@ public class DemoTimer {
     @Autowired
     private UserService userService;
 
-    @Scheduled(cron = "0/5 * * * * ?" )
+    //@Scheduled(cron = "0/5 * * * * ?" )
     public void demoTest(){
         System.out.println("hello");
     }
