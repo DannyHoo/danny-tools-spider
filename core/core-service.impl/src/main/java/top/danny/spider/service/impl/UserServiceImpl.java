@@ -88,4 +88,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         int result=userDao.update(userDO);
         return result;
     }
+
+    @Override
+    public int deleteUserById(Long userId) {
+        userDao.delete(userId);
+        return 1;
+    }
 }
