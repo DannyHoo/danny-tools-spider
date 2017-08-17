@@ -38,7 +38,7 @@ public class UserServiceImplTest extends BaseServiceSpringTest {
             User user = userService.findUserById(1051L);
             String distirctName = user.getAddress().split(" ")[user.getAddress().split(" ").length - 1];
             List<District> districtList = districtService.findDistrictByName(distirctName);
-            int result = userService.updateUser(user.setDistrictId(districtList.get(0).getId()));
+            int result = userService.updateUser(user.setAreaId(districtList.get(0).getId()));
             Assert.assertTrue(result > 0);
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class UserServiceImplTest extends BaseServiceSpringTest {
                     userService.deleteUserById(user.getId());
                     continue;
                 }
-                int result = userService.updateUser(user.setDistrictId(districtList.get(0).getId()));
+                int result = userService.updateUser(user.setAreaId(districtList.get(0).getId()));
                 System.out.println("用户"+user.getId()+"的地址更新完毕");
             }
             System.out.println("耗时：" + (System.currentTimeMillis() - startTime) + "秒");
@@ -76,11 +76,10 @@ public class UserServiceImplTest extends BaseServiceSpringTest {
     @Test
     public void updateUserAddressTest() {
         try {
-            List<User> userList = userService.findAllUser();
-            User user = userService.findUserById(1051L);
+            User user = userService.findUserById(283247L);
             String distirctName = user.getAddress().split(" ")[user.getAddress().split(" ").length - 1];
             List<District> districtList = districtService.findDistrictByName(distirctName);
-            int result = userService.updateUser(user.setDistrictId(districtList.get(0).getId()));
+            int result = userService.updateUser(user.setAreaId(districtList.get(0).getId()));
             Assert.assertTrue(result > 0);
         } catch (Exception e) {
             e.printStackTrace();

@@ -31,7 +31,7 @@ public class User extends BaseBean {
 
     private String address;
 
-    private Long districtId;
+    private Long areaId;
 
     private Integer age;
 
@@ -125,12 +125,12 @@ public class User extends BaseBean {
         return this;
     }
 
-    public Long getDistrictId() {
-        return districtId;
+    public Long getAreaId() {
+        return areaId;
     }
 
-    public User setDistrictId(Long districtId) {
-        this.districtId = districtId;
+    public User setAreaId(Long areaId) {
+        this.areaId = areaId;
         return this;
     }
 
