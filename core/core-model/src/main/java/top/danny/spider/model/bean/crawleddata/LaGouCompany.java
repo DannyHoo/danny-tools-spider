@@ -22,13 +22,17 @@ public class LaGouCompany extends BaseBean {
 
     private Long areaId;
 
-    private Integer salaryMax;
+    private double salaryMax;
 
-    private Integer salaryMin;
+    private double salaryMin;
+
+    private double salaryAvg;
 
     private Date publishTime;
 
     private String experience;
+
+    private String education;
 
     private String financingStage;
 
@@ -41,6 +45,8 @@ public class LaGouCompany extends BaseBean {
     private String companyLogo;
 
     private String industry;
+
+    private String jobName;
 
     private String jobFeature;
 
@@ -75,6 +81,33 @@ public class LaGouCompany extends BaseBean {
         return this;
     }
 
+    public double getSalaryMax() {
+        return salaryMax;
+    }
+
+    public LaGouCompany setSalaryMax(double salaryMax) {
+        this.salaryMax = salaryMax;
+        return this;
+    }
+
+    public double getSalaryMin() {
+        return salaryMin;
+    }
+
+    public LaGouCompany setSalaryMin(double salaryMin) {
+        this.salaryMin = salaryMin;
+        return this;
+    }
+
+    public double getSalaryAvg() {
+        return salaryAvg;
+    }
+
+    public LaGouCompany setSalaryAvg(double salaryAvg) {
+        this.salaryAvg = salaryAvg;
+        return this;
+    }
+
     public Long getAreaId() {
         return areaId;
     }
@@ -84,23 +117,7 @@ public class LaGouCompany extends BaseBean {
         return this;
     }
 
-    public Integer getSalaryMax() {
-        return salaryMax;
-    }
 
-    public LaGouCompany setSalaryMax(Integer salaryMax) {
-        this.salaryMax = salaryMax;
-        return this;
-    }
-
-    public Integer getSalaryMin() {
-        return salaryMin;
-    }
-
-    public LaGouCompany setSalaryMin(Integer salaryMin) {
-        this.salaryMin = salaryMin;
-        return this;
-    }
 
     public Date getPublishTime() {
         return publishTime;
@@ -117,6 +134,15 @@ public class LaGouCompany extends BaseBean {
 
     public LaGouCompany setExperience(String experience) {
         this.experience = experience;
+        return this;
+    }
+
+    public String getEducation() {
+        return education;
+    }
+
+    public LaGouCompany setEducation(String education) {
+        this.education = education;
         return this;
     }
 
@@ -171,6 +197,15 @@ public class LaGouCompany extends BaseBean {
 
     public LaGouCompany setIndustry(String industry) {
         this.industry = industry;
+        return this;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public LaGouCompany setJobName(String jobName) {
+        this.jobName = jobName;
         return this;
     }
 

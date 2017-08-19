@@ -1,5 +1,6 @@
 package top.danny.spider.dao.jpa.base;
 
+import com.alibaba.fastjson.JSON;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
@@ -26,6 +27,7 @@ public class BaseDaoImpl<T> extends SimpleJpaRepository<T, Long> implements Base
 
     public BaseDaoImpl(Class<T> domainClass, EntityManager entityManager) {
         super(domainClass, entityManager);
+        this.entityManager=entityManager;
     }
 
 
@@ -44,6 +46,7 @@ public class BaseDaoImpl<T> extends SimpleJpaRepository<T, Long> implements Base
     public void batchInsert(List list) {
         for (int i = 0; i < list.size(); i++) {
             entityManager.persist(list.get(i));
+            System.out.println("insert end:"+JSON.toJSONString(list.get(i)));
             if (i % 30 == 0) {
                 entityManager.flush();
                 entityManager.clear();

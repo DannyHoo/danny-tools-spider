@@ -14,4 +14,6 @@ import top.danny.spider.dao.jpa.base.BaseDao;
  */
 public interface LaGouCompanyDAO extends BaseDao<LaGouCompanyDO>,PagingAndSortingRepository<LaGouCompanyDO,Long>{
 
+    LaGouCompanyDO findByCompanyNameAndJobName(String companyName,String jobName);
+
 }

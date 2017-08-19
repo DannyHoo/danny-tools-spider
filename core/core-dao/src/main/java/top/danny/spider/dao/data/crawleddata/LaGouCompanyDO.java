@@ -33,10 +33,13 @@ public class LaGouCompanyDO extends BaseEntity {
     private Long areaId;
 
     @Column(name = "salaryMax")
-    private Integer salaryMax;
+    private double salaryMax;
 
     @Column(name = "salaryMin")
-    private Integer salaryMin;
+    private double salaryMin;
+
+    @Column(name = "salaryAvg")
+    private double salaryAvg;
 
     @Column(name = "publishTime")
     private Date publishTime;
@@ -61,6 +64,9 @@ public class LaGouCompanyDO extends BaseEntity {
 
     @Column(name = "industry")
     private String industry;
+
+    @Column(name = "jobName")
+    private String jobName;
 
     @Column(name = "jobFeature")
     private String jobFeature;
@@ -107,21 +113,30 @@ public class LaGouCompanyDO extends BaseEntity {
         return this;
     }
 
-    public Integer getSalaryMax() {
+    public double getSalaryMax() {
         return salaryMax;
     }
 
-    public LaGouCompanyDO setSalaryMax(Integer salaryMax) {
+    public LaGouCompanyDO setSalaryMax(double salaryMax) {
         this.salaryMax = salaryMax;
         return this;
     }
 
-    public Integer getSalaryMin() {
+    public double getSalaryMin() {
         return salaryMin;
     }
 
-    public LaGouCompanyDO setSalaryMin(Integer salaryMin) {
+    public LaGouCompanyDO setSalaryMin(double salaryMin) {
         this.salaryMin = salaryMin;
+        return this;
+    }
+
+    public double getSalaryAvg() {
+        return salaryAvg;
+    }
+
+    public LaGouCompanyDO setSalaryAvg(double salaryAvg) {
+        this.salaryAvg = salaryAvg;
         return this;
     }
 
@@ -194,6 +209,15 @@ public class LaGouCompanyDO extends BaseEntity {
 
     public LaGouCompanyDO setIndustry(String industry) {
         this.industry = industry;
+        return this;
+    }
+
+    public String getJobName() {
+        return jobName;
+    }
+
+    public LaGouCompanyDO setJobName(String jobName) {
+        this.jobName = jobName;
         return this;
     }
 
