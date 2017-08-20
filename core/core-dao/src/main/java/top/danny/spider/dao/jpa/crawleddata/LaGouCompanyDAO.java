@@ -4,6 +4,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import top.danny.spider.dao.data.crawleddata.LaGouCompanyDO;
 import top.danny.spider.dao.jpa.base.BaseDao;
 
+import java.util.List;
+
 /**
  * @author huyuyang@lxfintech.com
  * @Title: UserDAO
@@ -15,5 +17,7 @@ import top.danny.spider.dao.jpa.base.BaseDao;
 public interface LaGouCompanyDAO extends BaseDao<LaGouCompanyDO>,PagingAndSortingRepository<LaGouCompanyDO,Long>{
 
     LaGouCompanyDO findByCompanyNameAndJobName(String companyName,String jobName);
+
+    List<LaGouCompanyDO> findByPageUrl(String pageUrl);
 
 }

@@ -21,6 +21,7 @@ public class SpiderThread extends Thread{
     @Override
     public void run() {
         try {
+            Thread.sleep(10000000);
             System.out.println("线程："+Thread.currentThread().getName()+"启动……");
             laGouPageProcessor.spider();
         } catch (InterruptedException e) {

@@ -2,10 +2,8 @@ package top.danny.spider.service.component.spider.lagou.htmlunit;
 
 import com.alibaba.fastjson.JSON;
 import com.gargoylesoftware.htmlunit.html.*;
-import com.gargoylesoftware.htmlunit.javascript.host.html.HTMLUListElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import top.danny.spider.dao.data.SpiderTaskDO;
 import top.danny.spider.dao.jpa.SpiderTaskDAO;
 import top.danny.spider.dao.jpa.crawleddata.LaGouCompanyDAO;
 import top.danny.spider.model.bean.SpiderTask;
@@ -19,7 +17,6 @@ import top.danny.spider.service.component.spider.ShutDownWork;
 import top.danny.spider.service.impl.BaseServiceImpl;
 
 import java.io.*;
-import java.net.URL;
 import java.util.*;
 
 /**
@@ -37,12 +34,10 @@ public class LaGouPageProcessorImpl extends BaseServiceImpl implements LaGouPage
 
     /*待爬取的url缓存*/
     public static UrlCache urlCache = UrlCache.getInstance();
+    public UrlCache getUrlCache(){return urlCache;}
 
     static {
         //urlCache.push("58到家_资深Java工程师", htmlBeginPageUrl);
-        ClassLoader classLoader = LaGouPageProcessorImpl.class.getClassLoader();
-        URL url = classLoader.getResource("");
-        //String filePath = new StringBuffer(url.getPath()).append("resource/file/historytask").toString();
         String filePath = "/Users/dannyhoo/file/historytask";
         String fileContent = readBaffleContent(filePath);
         List<SpiderTask> spiderTaskList = JSON.parseArray(fileContent, SpiderTask.class);
@@ -59,37 +54,40 @@ public class LaGouPageProcessorImpl extends BaseServiceImpl implements LaGouPage
         //添加程序结束监听
         Runtime.getRuntime().addShutdownHook(ShutDownWork.getInstance(this, "persistenceUrlCatch"));
 
-        System.out.println("进入主方法，开始爬取，上次遗留任务数量："+urlCache.getSize());
-        while (urlCache.getSize() > 0) {  // TODO: 17/8/20 多个线程如何安全分配这么多任务？？？ 
-            LaGouCompany lagouCompany = getLaGouCompany(urlCache);
-            //synchronized (this){
-                if (laGouCompanyDAO.findByCompanyNameAndJobName(lagouCompany.getCompanyName(), lagouCompany.getJobName()) == null) {
-                    LaGouCompanyDO lagouCompanyDOSaved = laGouCompanyDAO.save(convertIgnoreNullProperty(lagouCompany, LaGouCompanyDO.class));
-                    System.out.println("入库成功：" + JSON.toJSONString(lagouCompanyDOSaved));
-                }
-            //}
-            Thread.sleep(10);
+        System.out.println("进入主方法，开始爬取，上次遗留任务数量：" + urlCache.getSize());
+        while (urlCache.getSize() > 0) {  // TODO: 17/8/20 多个线程如何安全分配这么多任务？？？
+            String beginUrl = "";
+            synchronized (this) {//加上之后会卡住
+                beginUrl = urlCache.pop();
+            }
+            LaGouCompany lagouCompany = getLaGouCompany(beginUrl);
+            if (laGouCompanyDAO.findByCompanyNameAndJobName(lagouCompany.getCompanyName(), lagouCompany.getJobName()) == null) {
+                LaGouCompanyDO lagouCompanyDOSaved = laGouCompanyDAO.save(convertIgnoreNullProperty(lagouCompany, LaGouCompanyDO.class));
+                System.out.println("入库成功：" + JSON.toJSONString(lagouCompanyDOSaved));
+            }
+
+            //Thread.sleep(10);
         }
         return true;
     }
 
 
-    public LaGouCompany getLaGouCompany(UrlCache urlCache) {
+    public LaGouCompany getLaGouCompany(String htmlPageUrl) {
 
-        String htmlPageUrl = urlCache.pop();
+        //String htmlPageUrl = urlCache.pop();
         System.out.println("开始爬取：" + htmlPageUrl);
         RequestData requestData = new RequestData("UTF-8", htmlPageUrl, "GET");
         HtmlPage requestResultPage = (HtmlPage) RequestSender.requestAndReturn(requestData);
 
-        List bodyList = requestResultPage.getByXPath("//html/body");
-        List container = requestResultPage.getByXPath("//html/body/div[@id='container']");
-        List positionHead = requestResultPage.getByXPath("//html/body/div[@class='position-head']/div[@class='position-content-l']");
-        List containerRight = requestResultPage.getByXPath("//html/body/div[@id='container']/div[@class='content_r']");
-        List containerLeft = requestResultPage.getByXPath("//html/body/div[@id='container']/div[@class='content_r']/dl[@class='job_company']");
+        //List bodyList = requestResultPage.getByXPath("//html/body");
+        //List container = requestResultPage.getByXPath("//html/body/div[@id='container']");
+        //List positionHead = requestResultPage.getByXPath("//html/body/div[@class='position-head']/div[@class='position-content-l']");
+        //List containerRight = requestResultPage.getByXPath("//html/body/div[@id='container']/div[@class='content_r']");
+        //List containerLeft = requestResultPage.getByXPath("//html/body/div[@id='container']/div[@class='content_r']/dl[@class='job_company']");
         List salaryRangeNode = requestResultPage.getByXPath("//html/body/div[@class='position-head']/div[@class='position-content ']/div[@class='position-content-l']/dd[1]/p[1]/span[1]");
 
         /*保存待爬取的URL*/
-        supplyUrlCache(urlCache, requestResultPage);
+        //supplyUrlCache(urlCache, requestResultPage);
 
         String pageUrl = htmlPageUrl;
         String companyName = getCompanyName(requestResultPage);
@@ -388,9 +386,9 @@ public class LaGouPageProcessorImpl extends BaseServiceImpl implements LaGouPage
             //spiderTaskDAO.batchInsert(convertList(spiderTaskList, SpiderTaskDO.class));
             String path = System.getProperty("user.dir");
             //String filePath =path+"/core/core-service.impl/src/test/resources/resource/file/"+ UUID.randomUUID();
-            String filePath ="/Users/dannyhoo/file/"+ UUID.randomUUID();
-            writeBaffleContent(filePath,JSON.toJSONString(spiderTaskList));
-            System.out.println("中断爬取任务，持久化遗留任务结束…… 遗留任务数量："+spiderTaskList.size()+"，执行数量："+urlCache.getUrlCacheMapHistory().size());
+            String filePath = "/Users/dannyhoo/file/" + UUID.randomUUID();
+            createFile(filePath, JSON.toJSONString(spiderTaskList));
+            System.out.println("中断爬取任务，持久化遗留任务结束…… 遗留任务数量：" + spiderTaskList.size() + "，执行数量：" + urlCache.getUrlCacheMapHistory().size());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -429,25 +427,118 @@ public class LaGouPageProcessorImpl extends BaseServiceImpl implements LaGouPage
         }
     }
 
-    public static void writeBaffleContent(String filePath, String fileContent) {
+    public static boolean createFile(String fileName, String filecontent) {
+        Boolean bool = false;
+        String filenameTemp = fileName;//文件路径+名称+文件类型
+        File file = new File(filenameTemp);
         try {
-            File file = new File(filePath);
+            //如果文件不存在，则创建新的文件
             if (!file.exists()) {
                 file.createNewFile();
+                bool = true;
+                System.out.println("success create file,the file is " + filenameTemp);
+                //创建文件成功后，写入内容到文件里
+                writeFileContent(filenameTemp, filecontent);
+                System.out.println("遗留任务已经写入文件：" + filenameTemp + "写入内容：" + filecontent);
             }
-            FileWriter fileWritter = new FileWriter(file.getName(), true);
-            BufferedWriter bufferWritter = new BufferedWriter(fileWritter);
-            bufferWritter.write(fileContent);
-            bufferWritter.close();
-            System.out.println("遗留任务已经写入文件：" + filePath);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return bool;
+    }
+
+    /**
+     * 向文件中写入内容
+     *
+     * @param filepath 文件路径与名称
+     * @param newstr   写入的内容
+     * @return
+     * @throws IOException
+     */
+    public static boolean writeFileContent(String filepath, String newstr) throws IOException {
+        Boolean bool = false;
+        String filein = newstr + "\r\n";//新写入的行，换行
+        String temp = "";
+
+        FileInputStream fis = null;
+        InputStreamReader isr = null;
+        BufferedReader br = null;
+        FileOutputStream fos = null;
+        PrintWriter pw = null;
+        try {
+            File file = new File(filepath);//文件路径(包括文件名称)
+            //将文件读入输入流
+            fis = new FileInputStream(file);
+            isr = new InputStreamReader(fis);
+            br = new BufferedReader(isr);
+            StringBuffer buffer = new StringBuffer();
+
+            //文件原有内容
+            for (int i = 0; (temp = br.readLine()) != null; i++) {
+                buffer.append(temp);
+                // 行与行之间的分隔符 相当于“\n”
+                buffer = buffer.append(System.getProperty("line.separator"));
+            }
+            buffer.append(filein);
+
+            fos = new FileOutputStream(file);
+            pw = new PrintWriter(fos);
+            pw.write(buffer.toString().toCharArray());
+            pw.flush();
+            bool = true;
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        } finally {
+            //不要忘记关闭
+            if (pw != null) {
+                pw.close();
+            }
+            if (fos != null) {
+                fos.close();
+            }
+            if (br != null) {
+                br.close();
+            }
+            if (isr != null) {
+                isr.close();
+            }
+            if (fis != null) {
+                fis.close();
+            }
+        }
+        return bool;
     }
 
     public static void main(String[] args) {
-        String filePath ="/Users/dannyhoo/file/"+ UUID.randomUUID();
-        writeBaffleContent(filePath,"adfadf");
+        String filePath = "/Users/dannyhoo/file/" + UUID.randomUUID();
+        createFile(filePath, "adfadf");
         System.out.println();
+    }
+
+    public void cleanData() {
+        List<SpiderTask> spiderTaskList = getSpiderTaskList(urlCache.getUrlCacheMap());
+        int originalTaskCount = spiderTaskList.size();
+        Iterator<SpiderTask> iterator = spiderTaskList.iterator();
+        while (iterator.hasNext()) {
+            SpiderTask s = iterator.next();
+            List<LaGouCompanyDO> laGouCompanyDOList = laGouCompanyDAO.findByPageUrl(s.getUrl());
+
+            if (laGouCompanyDOList != null && laGouCompanyDOList.size() > 0) {
+                LaGouCompanyDO laGouCompanyDO = laGouCompanyDOList.get(0);
+                System.out.println("该任务已经执行过，即将过滤……" + laGouCompanyDO.getCompanyName() + "_" + laGouCompanyDO.getJobName());
+                iterator.remove();
+                if (laGouCompanyDOList.size() > 1) {//如果数据库中存在多条重复数据，滞留一条
+                    System.out.println("数据库中已经存在多条数据，即将清理：" + JSON.toJSONString(laGouCompanyDOList));
+                    for (int i = 1; i < laGouCompanyDOList.size(); i++) {
+                        laGouCompanyDAO.delete(laGouCompanyDOList.get(i).getId());
+                    }
+                }
+            }
+        }
+        String filePath = "/Users/dannyhoo/file/" + UUID.randomUUID();
+        createFile(filePath, JSON.toJSONString(spiderTaskList));
+        System.out.println("数据清洗结束，原来任务数量：" + originalTaskCount + "；清洗后的任务数量：" + spiderTaskList.size());
     }
 }

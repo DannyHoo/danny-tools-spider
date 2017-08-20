@@ -1,5 +1,7 @@
 package top.danny.spider.service.component;
 
+import top.danny.spider.model.dto.UrlCache;
+
 /**
  * @author huyuyang@lxfintech.com
  * @Title: LaGouPageProcessor
@@ -10,5 +12,10 @@ package top.danny.spider.service.component;
  */
 public interface LaGouPageProcessor {
 
+    UrlCache getUrlCache();
+
     boolean spider() throws InterruptedException;
+
+    void cleanData();
+
 }
