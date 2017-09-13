@@ -288,8 +288,8 @@
                         <resource>
                             <!-- 元配置文件的目录，相对于pom.xml文件的路径 -->
                             <directory>src/main/webapp/WEB-INF</directory>
-                            <!-- 是否过滤文件，也就是是否启动auto-config的功能 -->
-                            <filtering>true</filtering>
+                            <!-- 是否过滤文件，也就是是否启动auto-config的功能 如果true可能导致css控制的图标不显示-->
+                            <filtering>false</filtering>
                             <!-- 目标路径 -->
                             <targetPath>WEB-INF</targetPath>
                         </resource>
