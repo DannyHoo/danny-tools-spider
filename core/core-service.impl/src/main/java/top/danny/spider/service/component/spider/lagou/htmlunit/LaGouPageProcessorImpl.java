@@ -34,14 +34,17 @@ public class LaGouPageProcessorImpl extends BaseServiceImpl implements LaGouPage
 
     /*待爬取的url缓存*/
     public static UrlCache urlCache = UrlCache.getInstance();
-    public UrlCache getUrlCache(){return urlCache;}
+
+    public UrlCache getUrlCache() {
+        return urlCache;
+    }
 
     static {
-        //urlCache.push("58到家_资深Java工程师", htmlBeginPageUrl);
+        /*urlCache.push("番茄便利_JAVA开发工程师 ", "https://www.lagou.com/jobs/3415478.html");
         String filePath = "/Users/dannyhoo/file/historytask";
         String fileContent = readBaffleContent(filePath);
-        List<SpiderTask> spiderTaskList = JSON.parseArray(fileContent, SpiderTask.class);
-        urlCache.initUrlCatch(spiderTaskList);
+        List<SpiderTask> spiderTaskList = JSON.parseArray(fileContent, SpiderTask.class);*/
+        //urlCache.initUrlCatch(spiderTaskList);
     }
 
     @Autowired
@@ -50,24 +53,18 @@ public class LaGouPageProcessorImpl extends BaseServiceImpl implements LaGouPage
     private SpiderTaskDAO spiderTaskDAO;
 
     @Override
-    public boolean spider() throws InterruptedException {
+    public boolean spider(String beginUrl) throws InterruptedException {
         //添加程序结束监听
-        Runtime.getRuntime().addShutdownHook(ShutDownWork.getInstance(this, "persistenceUrlCatch"));
+        //Runtime.getRuntime().addShutdownHook(ShutDownWork.getInstance(this, "persistenceUrlCatch"));
 
         System.out.println("进入主方法，开始爬取，上次遗留任务数量：" + urlCache.getSize());
-        while (urlCache.getSize() > 0) {  // TODO: 17/8/20 多个线程如何安全分配这么多任务？？？
-            String beginUrl = "";
-            synchronized (this) {//加上之后会卡住
-                beginUrl = urlCache.pop();
-            }
-            LaGouCompany lagouCompany = getLaGouCompany(beginUrl);
-            if (laGouCompanyDAO.findByCompanyNameAndJobName(lagouCompany.getCompanyName(), lagouCompany.getJobName()) == null) {
-                LaGouCompanyDO lagouCompanyDOSaved = laGouCompanyDAO.save(convertIgnoreNullProperty(lagouCompany, LaGouCompanyDO.class));
-                System.out.println("入库成功：" + JSON.toJSONString(lagouCompanyDOSaved));
-            }
 
-            //Thread.sleep(10);
+        LaGouCompany lagouCompany = getLaGouCompany(beginUrl);
+        if (laGouCompanyDAO.findByCompanyNameAndJobName(lagouCompany.getCompanyName(), lagouCompany.getJobName()) == null) {
+            LaGouCompanyDO lagouCompanyDOSaved = laGouCompanyDAO.save(convertIgnoreNullProperty(lagouCompany, LaGouCompanyDO.class));
+            System.out.println("入库成功：" + JSON.toJSONString(lagouCompanyDOSaved));
         }
+
         return true;
     }
 
@@ -87,7 +84,7 @@ public class LaGouPageProcessorImpl extends BaseServiceImpl implements LaGouPage
         List salaryRangeNode = requestResultPage.getByXPath("//html/body/div[@class='position-head']/div[@class='position-content ']/div[@class='position-content-l']/dd[1]/p[1]/span[1]");
 
         /*保存待爬取的URL*/
-        //supplyUrlCache(urlCache, requestResultPage);
+        supplyUrlCache(urlCache, requestResultPage);
 
         String pageUrl = htmlPageUrl;
         String companyName = getCompanyName(requestResultPage);

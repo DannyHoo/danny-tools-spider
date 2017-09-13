@@ -23,6 +23,31 @@ import java.util.concurrent.TimeUnit;
  * @Description:
  * @Company: lxjr.com
  * @Created on 2017-08-19 00:34:29
+ * SELECT *
+FROM t_lagou_company
+WHERE !(jobName like '%JAVA%'
+OR jobName like '%Java%'
+OR jobName like '%java%'
+OR jobName like '%后台%'
+OR jobName like '%后端%'
+OR jobName like '%服务器%'
+OR jobName like '%架构%'
+OR jobName like '%大数据%'
+OR jobName like '%技术%')
+
+SELECT count(*)
+FROM t_lagou_company
+WHERE (!(jobName like '%JAVA%'
+OR jobName like '%Java%'
+OR jobName like '%java%'
+OR jobName like '%后台%'
+OR jobName like '%后端%'
+OR jobName like '%服务器%'
+OR jobName like '%架构%'
+OR jobName like '%大数据%'
+OR jobName like '%技术%'))
+AND salaryMin>10000
+AND salaryMax<50000
  */
 public class LaGouPageProcessorImplTest extends BaseServiceSpringTest {
 
@@ -37,25 +62,18 @@ public class LaGouPageProcessorImplTest extends BaseServiceSpringTest {
 
     @Before
     public void before() {
-        pool = Executors.newFixedThreadPool(10);
-        spiderThread1 = new SpiderThread(laGouPageProcessor);
-        spiderThread2 = new SpiderThread(laGouPageProcessor);
-        spiderThread3 = new SpiderThread(laGouPageProcessor);
-        spiderThread4 = new SpiderThread(laGouPageProcessor);
-        spiderThread5 = new SpiderThread(laGouPageProcessor);
-
+        pool = Executors.newFixedThreadPool(2);
     }
 
     @Test
     public void testSpider() {
-        try {
-            pool.execute(spiderThread1);
-            pool.execute(spiderThread2);
-            ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) pool;
-            System.out.println("task:" + threadPoolExecutor.getActiveCount()
-                    + "active:" + threadPoolExecutor.getActiveCount());
+        //添加程序结束监听
+        Runtime.getRuntime().addShutdownHook(ShutDownWork.getInstance(laGouPageProcessor, "persistenceUrlCatch"));
 
-           /* spiderThread1.start();
+        try {
+            ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) pool;
+
+            /*spiderThread1.start();
             spiderThread2.start();
             spiderThread3.start();
             spiderThread4.start();
@@ -68,8 +86,13 @@ public class LaGouPageProcessorImplTest extends BaseServiceSpringTest {
 
             UrlCache urlCache = laGouPageProcessor.getUrlCache();
             while (urlCache.getSize() > 0) {  // TODO: 17/8/20 多个线程如何安全分配这么多任务？？？
+
                 String beginUrl = urlCache.pop();
-                threadPoolExecutor.execute(new SpiderThread(laGouPageProcessor));
+                laGouPageProcessor.spider(beginUrl);
+                /*threadPoolExecutor.execute(new SpiderThread(laGouPageProcessor, beginUrl));
+                System.out.println("poolsize:" + threadPoolExecutor.getCorePoolSize()+
+                        "task:" + threadPoolExecutor.getActiveCount()+
+                        "active:" + threadPoolExecutor.getActiveCount());*/
             }
             //laGouPageProcessor.spider();
 

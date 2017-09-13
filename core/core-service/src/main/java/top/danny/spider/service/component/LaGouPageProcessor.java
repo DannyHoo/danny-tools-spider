@@ -14,7 +14,7 @@ public interface LaGouPageProcessor {
 
     UrlCache getUrlCache();
 
-    boolean spider() throws InterruptedException;
+    boolean spider(String beginUrl) throws InterruptedException;
 
     void cleanData();
 

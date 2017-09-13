@@ -23,6 +23,9 @@ public class BgIndexController {
 
     @RequestMapping("/index")
     public String index(){
+        /*if(true){
+            throw new IllegalArgumentException("异常测试");
+        }*/
         return "bg/index";
     }
 
