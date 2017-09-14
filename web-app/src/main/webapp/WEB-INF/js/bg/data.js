@@ -216,8 +216,8 @@ require(
                 'rgba(37, 140, 249, 0.8)'
             ],
             title: {
-                text: '大规模MarkPoint特效',
-                subtext: '纯属虚构',
+                text: '全国PM2.5监测质量分布图',
+                subtext: '部分地区',
                 x: 'center',
                 textStyle: {
                     color: '#fff'
